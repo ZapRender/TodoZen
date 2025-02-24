@@ -30,3 +30,6 @@ lib/
 
 Para el caso de mi app, por el momento solo voy a implementar el tema oscuro por defecto, pero se dejan preparados
 los archivos para configurar el tema claro.
+
+para la creacion y administracion de las ramas use git flow. Creando una rama main
+una rama de develop, y una rama de feature para cada funcionalidad que se vaya a implementar.
