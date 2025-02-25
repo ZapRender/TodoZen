@@ -58,7 +58,7 @@ class AppTextTheme {
     labelLarge: TextStyle().copyWith(
       fontSize: 12.0,
       fontWeight: FontWeight.normal,
-      color: AppColors.primaryTextDark,
+      color: AppColors.secondaryTextDark,
     ),
     labelMedium: TextStyle().copyWith(
       fontSize: 12.0,
