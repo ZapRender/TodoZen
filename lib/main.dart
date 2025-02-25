@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_zen/core/theme/app_theme.dart';
+import 'package:todo_zen/presentation/views/home/home_screen.dart';
 import 'package:todo_zen/presentation/views/login/login_screen.dart';
 import 'package:todo_zen/presentation/views/register/register_screen.dart';
 
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
       themeMode: ThemeMode.system, //Change when light theme is ready
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: RegisterScreen(),
+      home: HomeScreen(),
     );
   }
 }

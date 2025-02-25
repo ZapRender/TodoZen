@@ -23,5 +23,14 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.black,
     textTheme: AppTextTheme.darkTextTheme,
     elevatedButtonTheme: AppElevatedButtonTheme.darkElevatedButtonTheme,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        textStyle: const TextStyle(
+          fontSize: 16.0,
+          color: AppColors.primaryDark,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    ),
   );
 }
