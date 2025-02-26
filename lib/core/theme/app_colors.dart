@@ -13,4 +13,6 @@ class AppColors {
   static const darksurface = Color(0xFF1E1E1E);
   static const darkCard = Color(0xFF363636);
   static const buttonColor = Color(0xFF8687E7);
+
+  static const error = Color(0xFFFF4949);
 }
