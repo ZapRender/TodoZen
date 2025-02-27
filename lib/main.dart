@@ -1,20 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:todo_zen/core/bindings/auth_binding.dart';
+import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_theme.dart';
 import 'package:todo_zen/firebase_options.dart';
-import 'package:todo_zen/presentation/views/task_description/task_description_screen.dart';
+import 'package:todo_zen/presentation/controllers/auth_controller.dart';
+import 'package:todo_zen/routes/app_pages.dart';
+import 'package:todo_zen/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MainApp());
+  Get.put(AuthController());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+  MainApp({super.key});
+  final AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -22,8 +24,35 @@ class MainApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      initialBinding: AuthBinding(),
-      home: TaskDescriptionScreen(),
+      initialRoute: AppRoutes.splash,
+      getPages: AppPages.routes,
     );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final authController = Get.find<AuthController>();
+    Future.delayed(Duration(seconds: 2)).whenComplete(() {
+      if (authController.firebaseUser.value != null) {
+        Get.offAllNamed(AppRoutes.home);
+      } else {
+        Get.offAllNamed(AppRoutes.login);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

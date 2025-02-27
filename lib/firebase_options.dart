@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'todozen-dbb21.firebasestorage.app',
     measurementId: 'G-MEB7W2BHJZ',
   );
+
 }
