@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:todo_zen/core/theme/app_text_theme.dart';
+import 'package:get/get.dart';
+import 'package:todo_zen/presentation/controllers/auth_controller.dart';
+import 'package:todo_zen/routes/app_routes.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
+
+  final AuthController authController = Get.find<AuthController>();
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +34,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 53.0),
                     TextField(
+                      controller: emailController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Email',
@@ -33,6 +43,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 30.0),
                     TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -42,6 +53,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 30.0),
                     TextField(
+                      controller: confirmPasswordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -52,9 +64,17 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: 69.0),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/home');
+                        if (passwordController.text ==
+                            confirmPasswordController.text) {
+                          authController.register(
+                            emailController.text,
+                            passwordController.text,
+                          );
+                        } else {
+                          Get.snackbar('Error', 'Passwords do not match');
+                        }
                       },
-                      child: const Text('Login'),
+                      child: const Text('Register'),
                     ),
                     SizedBox(height: 31.0),
                     Row(
@@ -77,15 +97,15 @@ class RegisterScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Already have an account?',
-                          style: AppTextTheme.darkTextTheme.labelLarge,
+                          style: Theme.of(context).textTheme.labelLarge,
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/forgot-password');
+                          onPressed: () async {
+                            Get.toNamed(AppRoutes.login);
                           },
                           child: Text(
                             'Login',
-                            style: AppTextTheme.darkTextTheme.labelMedium,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ),
                       ],

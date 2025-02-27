@@ -1,14 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_zen/core/theme/app_colors.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
+import 'package:todo_zen/data/models/task_model.dart';
+import 'package:todo_zen/presentation/controllers/task_controller.dart';
 
 class BottomSheetTasks extends StatelessWidget {
-  const BottomSheetTasks({super.key});
+  BottomSheetTasks({super.key});
+
+  final TaskController taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
-    // DateTime firstDate = DateTime.now();
-    // DateTime lastDate = DateTime.now().add(Duration(days: 7));
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -17,6 +24,7 @@ class BottomSheetTasks extends StatelessWidget {
         children: [
           Text('Add Task', style: AppTextTheme.darkTextTheme.headlineMedium),
           TextField(
+            controller: taskController.titleController,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -32,6 +40,7 @@ class BottomSheetTasks extends StatelessWidget {
             ),
           ),
           TextField(
+            controller: taskController.descriptionController,
             textCapitalization: TextCapitalization.sentences,
             maxLines: null,
             decoration: InputDecoration(
@@ -48,27 +57,61 @@ class BottomSheetTasks extends StatelessWidget {
             ),
           ),
 
-          TextField(
-            textCapitalization: TextCapitalization.sentences,
-            maxLines: null,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              hintStyle: TextStyle(
-                fontSize: 18.0,
-                color: AppColors.primaryTextDark.withValues(alpha: 0.5),
+          GestureDetector(
+            onTap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+              );
+              if (pickedDate != null) {
+                taskController.dateController.text = DateFormat(
+                  'yyyy-MM-dd',
+                ).format(pickedDate);
+              }
+            },
+            child: AbsorbPointer(
+              child: TextField(
+                controller: taskController.dateController,
+                textCapitalization: TextCapitalization.sentences,
+                maxLines: null,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  hintStyle: TextStyle(
+                    fontSize: 18.0,
+                    color: AppColors.primaryTextDark.withValues(alpha: 0.5),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  hintText: 'Date',
+                ),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              hintText: 'Date',
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: null,
+                onPressed: () {
+                  final DateTime date = DateFormat(
+                    'yyyy-MM-dd',
+                  ).parse(taskController.dateController.text);
+                  try {
+                    final task = TaskModel(
+                      id: '',
+                      title: taskController.titleController.text,
+                      description: taskController.descriptionController.text,
+                      date: Timestamp.fromDate(date),
+                    );
+                    taskController.addTask(task);
+                    Get.back();
+                  } catch (e) {
+                    Get.snackbar('Error: ', e.toString());
+                  }
+                },
                 child: Text(
                   'Save',
                   style: TextStyle(
