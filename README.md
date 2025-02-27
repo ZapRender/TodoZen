@@ -1,50 +1,81 @@
-# todo_zen
+# Todo Zen
 
+## Descripción
+Todo Zen es una aplicación de tareas desarrollada con **Flutter** y **GetX**, enfocada en ofrecer una experiencia fluida y eficiente. Se basa en principios de **Clean Architecture** y **Feature-Based Architecture**, lo que permite un código modular, escalable y fácil de mantener.
 
-Para el desarrollo de esta aplicación decidí utilizar el paquete GetX, ya que es un paquete muy completo y fácil de usar, 
-que me permite tener un control total sobre el estado de la aplicación, la navegación, la inyección de dependencias, entre otras cosas.
+## Tecnologías utilizadas
+- **Flutter**: Framework para la creación de la interfaz de usuario.
+- **GetX**: Paquete para la gestión del estado, navegación e inyección de dependencias.
+- **Firebase**:
+  - **Cloud Firestore**: Almacenamiento de tareas.
+  - **Cloud Functions**: Traducción automática de texto a inglés.
+  - **Firebase Auth**: Autenticación de usuarios.
+- **Git Flow**: Estrategia de control de versiones con ramas **main**, **develop** y **feature**.
 
-Resumen de getx:
+## Estructura del Proyecto
+El proyecto sigue una estructura basada en **Clean Architecture** y organización por features:
 
-    1. controlador: Es el intermediario entre la UI y la logica de negocio. Se encarga de manejar el estado de la aplicacion y llamar a los casos de uso cuando se necesiten.
-    2. Binding: Es una clase que se encarga de inyectar las dependencias en el controlador. Es decir, se encarga de que cada pantalla 
-    obtenga las instancias correctas del controlador y sus dependencias.
-    3. Rutas: Las rutas de getx permiten la navegacion sin la necesidad de context. Se definen en un solo archivo y se usan en toda la app.
-    4. Vista: Es la Ui de la app. Se utiliza el obs() para escuchar los cambios de estado del controlador. 
-
-Modelo de datos 
-Clase repositorio -> maneja el acceso a los datos 
-Caso de uso -> encapsula toda la logica de negocio de la aplicacion
-Tecnologias a usar:
-
-Firebase cloud Firestore -> Donde se van a almacenar las tareas
-Firebase cloud functions (firebase cloud triggers y libreria de node) -> Para traducir el texto ingresado a ingles.
-Firebase auth -> Para la autenticacion de los usuarios
-
-Para esta app decidí utilizar una arquitectura basada en Faeature-based y Clean Architecture, con el fin de tener un código más limpio y escalable.
+```
 lib/
-│── core/
-│   ├── services/        # Servicios generales (Firebase, API, etc.)
-│   ├── utils/           # Utilidades y helpers
-│   ├── bindings/        # Bindings de GetX
-│   ├── theme/           # Configuración de temas
-│── data/
-│   ├── models/          # Modelos de datos
-│   ├── repositories/    # Repositorios de datos (Firebase, local, etc.)
-│── domain/
-│   ├── use_cases/       # Casos de uso (lógica de negocio)
-│── presentation/
-│   ├── controllers/     # Controladores de GetX
-│   ├── views/           # Pantallas y widgets
-│   ├── widgets/         # Widgets reutilizables
-│── routes/
-│   ├── app_pages.dart   # Definición de rutas con GetX
-│   ├── app_routes.dart  # Nombres de rutas
-│── main.dart            # Punto de entrada de la app
+│── core/              # Componentes esenciales y reutilizables
+│   ├── services/      # Servicios generales (Firebase, API, etc.)
+│   ├── utils/         # Funciones auxiliares y helpers
+│   ├── bindings/      # Bindings de GetX para inyección de dependencias
+│   ├── theme/         # Configuración de temas (oscuro y claro)
+│── data/              # Capa de datos
+│   ├── models/        # Modelos de datos
+│   ├── repositories/  # Repositorios de acceso a datos (Firebase, local, etc.)
+│── domain/            # Capa de dominio
+│   ├── use_cases/     # Lógica de negocio encapsulada en casos de uso
+│── presentation/      # Capa de presentación
+│   ├── controllers/   # Controladores de GetX
+│   ├── views/         # Pantallas de la app
+│   ├── widgets/       # Componentes reutilizables
+│── routes/            # Configuración de rutas con GetX
+│   ├── app_pages.dart # Definición de rutas
+│   ├── app_routes.dart# Nombres de rutas
+│── main.dart          # Punto de entrada de la app
+```
 
+## Gestión del Estado con GetX
+### Conceptos clave de GetX implementados en la app:
+1. **Controlador**: Intermediario entre la UI y la lógica de negocio. Maneja el estado y llama a los casos de uso según se necesite.
+2. **Binding**: Inyecta dependencias en los controladores, asegurando que cada pantalla reciba las instancias adecuadas.
+3. **Rutas**: Permiten la navegación sin `context`, definiéndolas en un solo archivo para usarlas en toda la app.
+4. **Vista**: La UI de la app, donde se usa `Obx()` para reaccionar a cambios de estado en los controladores.
 
-Para el caso de mi app, por el momento solo voy a implementar el tema oscuro por defecto, pero se dejan preparados
-los archivos para configurar el tema claro.
+## Temas
+Actualmente, la aplicación está configurada para utilizar **tema oscuro por defecto**, pero la estructura está lista para agregar un modo claro en el futuro.
 
-para la creacion y administracion de las ramas use git flow. Creando una rama main
-una rama de develop, y una rama de feature para cada funcionalidad que se vaya a implementar.
+## Gestión de Versionado con Git Flow
+Se ha seguido la estrategia de **Git Flow**:
+- **`main`**: Contiene las versiones estables en producción.
+- **`develop`**: Rama principal de desarrollo.
+- **`feature/*`**: Ramas creadas para cada nueva funcionalidad.
+
+## Instalación y Ejecución
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/ZapRender/TodoZen.git
+   cd todo_zen
+   ```
+2. Instala las dependencias:
+   ```bash
+   flutter pub get
+   ```
+3. Configura Firebase:
+   - Descarga el archivo `google-services.json` (Android) o `GoogleService-Info.plist` (iOS) desde Firebase y colócalo en su respectiva carpeta `android/app` o `ios/Runner`.
+4. Ejecuta la aplicación:
+   ```bash
+   flutter run
+   ```
+
+## Próximas Mejoras
+- Implementación del modo claro.
+- Integración de pruebas unitarias y de UI.
+- Soporte para múltiples idiomas.
+
+---
+**Autor:** Alejandro Zamudio   
+**Repositorio:** [GitHub](https://github.com/ZapRender/TodoZen)
+
