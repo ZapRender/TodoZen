@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TaskModel {
   String id;
   String title;
   String description;
-  DateTime date;
+  Timestamp date;
   bool isCompleted;
 
   TaskModel({
@@ -16,10 +18,10 @@ class TaskModel {
   factory TaskModel.fromMap(Map<String, dynamic> map, String id) {
     return TaskModel(
       id: id,
-      title: map['title'],
-      description: map['description'],
-      date: DateTime.parse(map['date']),
-      isCompleted: map['isCompleted'] == 1,
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      date: map['date'] ?? Timestamp.now(),
+      isCompleted: map['isCompleted'] ?? false,
     );
   }
 
@@ -27,8 +29,8 @@ class TaskModel {
     return {
       'title': title,
       'description': description,
-      'date': date.toIso8601String(),
-      'isCompleted': isCompleted ? 1 : 0,
+      'date': date,
+      'isCompleted': isCompleted,
     };
   }
 }

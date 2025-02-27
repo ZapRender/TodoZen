@@ -6,7 +6,8 @@ class FirestoreService {
       .collection('tasks');
 
   Future<void> addTask(TaskModel task) async {
-    await _taskCollection.add(task.toMap());
+    DocumentReference docRef = await _taskCollection.add(task.toMap());
+    await docRef.update({'id': docRef.id});
   }
 
   Future<void> updateTask(TaskModel task) async {

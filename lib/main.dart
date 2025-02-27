@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_zen/core/bindings/todo_zen_binding.dart';
 import 'package:todo_zen/core/theme/app_theme.dart';
 import 'package:todo_zen/firebase_options.dart';
 import 'package:todo_zen/presentation/controllers/auth_controller.dart';
@@ -25,6 +26,7 @@ class MainApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       initialRoute: AppRoutes.splash,
+      initialBinding: TodoZenBinding(),
       getPages: AppPages.routes,
     );
   }

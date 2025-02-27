@@ -49,11 +49,11 @@ class HomeScreen extends StatelessWidget {
         () => BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.logout_outlined),
+              icon: Icon(Icons.logout_outlined, color: Colors.white),
               label: 'Logout',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history),
+              icon: Icon(Icons.history, color: Colors.white),
               label: 'History',
             ),
           ],
