@@ -1,5 +1,20 @@
 # todo_zen
 
+
+Para el desarrollo de esta aplicación decidí utilizar el paquete GetX, ya que es un paquete muy completo y fácil de usar, 
+que me permite tener un control total sobre el estado de la aplicación, la navegación, la inyección de dependencias, entre otras cosas.
+
+Resumen de getx:
+
+    1. controlador: Es el intermediario entre la UI y la logica de negocio. Se encarga de manejar el estado de la aplicacion y llamar a los casos de uso cuando se necesiten.
+    2. Binding: Es una clase que se encarga de inyectar las dependencias en el controlador. Es decir, se encarga de que cada pantalla 
+    obtenga las instancias correctas del controlador y sus dependencias.
+    3. Rutas: Las rutas de getx permiten la navegacion sin la necesidad de context. Se definen en un solo archivo y se usan en toda la app.
+    4. Vista: Es la Ui de la app. Se utiliza el obs() para escuchar los cambios de estado del controlador. 
+
+Modelo de datos 
+Clase repositorio -> maneja el acceso a los datos 
+Caso de uso -> encapsula toda la logica de negocio de la aplicacion
 Tecnologias a usar:
 
 Firebase cloud Firestore -> Donde se van a almacenar las tareas
