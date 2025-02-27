@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_zen/presentation/controllers/auth_controller.dart';
+import 'package:todo_zen/routes/app_routes.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -100,14 +101,10 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () async {
-                            final authController = Get.find<AuthController>();
-                            await authController.register(
-                              emailController.text,
-                              passwordController.text,
-                            );
+                            Get.toNamed(AppRoutes.login);
                           },
                           child: Text(
-                            'Register',
+                            'Login',
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ),

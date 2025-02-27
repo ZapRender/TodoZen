@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
+import 'package:todo_zen/presentation/controllers/home_controller.dart';
 import 'package:todo_zen/presentation/views/home/widgets/bottom_sheet_tasks.dart';
 import 'package:todo_zen/presentation/views/home/widgets/task_item_list.dart';
 
@@ -8,6 +10,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.put(HomeController());
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,11 +45,21 @@ class HomeScreen extends StatelessWidget {
         ),
         child: Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-        ],
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.logout_outlined),
+              label: 'Logout',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'History',
+            ),
+          ],
+          currentIndex: homeController.selectedIndex.value,
+          onTap: homeController.onItemTapped,
+        ),
       ),
     );
   }
