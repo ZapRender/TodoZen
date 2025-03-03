@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
 import 'package:todo_zen/presentation/controllers/home_controller.dart';
+import 'package:todo_zen/presentation/controllers/task_controller.dart';
 import 'package:todo_zen/presentation/views/home/widgets/bottom_sheet_tasks.dart';
+import 'package:todo_zen/presentation/views/home/widgets/no_tasks.dart';
 import 'package:todo_zen/presentation/views/home/widgets/task_item_list.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
+    final TaskController taskController = Get.put(TaskController());
 
     return Scaffold(
       appBar: AppBar(
@@ -20,10 +23,21 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) => TasksItemList(),
-      ),
+      body: Obx(() {
+        if (taskController.tasks.isEmpty) {
+          return NoTasks();
+        } else {
+          return ListView.builder(
+            itemCount: taskController.tasks.length,
+            itemBuilder: (context, index) {
+              final task = taskController.tasks[index];
+              return TasksItemList(
+                taskValue: task,
+              );
+            },
+          );
+        }
+      }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_colors.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
+import 'package:todo_zen/data/models/task_model.dart';
+import 'package:todo_zen/presentation/controllers/task_controller.dart';
 
 class TaskDescriptionScreen extends StatelessWidget {
-  const TaskDescriptionScreen({super.key});
+  TaskDescriptionScreen({super.key});
+
+  final TaskController taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
+    final TaskModel taskValue = Get.arguments;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.darkBackground,
         leading: IconButton(
-          onPressed: null,
+          onPressed: () => Get.back(),
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.delete_outline, color: AppColors.error),
             onPressed: () {
-              // Acción para el icono de editar
+              _showDeleteConfirmationDialog(context, taskValue);
             },
           ),
         ],
@@ -48,35 +55,24 @@ class TaskDescriptionScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Task title',
+                    taskValue.title,
                     style: AppTextTheme.darkTextTheme.headlineMedium,
                   ),
                   SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.calendar_today),
-                          SizedBox(width: 5),
-                          Text('Task Date: '),
-                        ],
+
+                  Card(
+                    color: AppColors.darkCard,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 8,
                       ),
-                      Card(
-                        color: AppColors.darkCard,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 8,
-                          ),
-                          child: Text('Today'),
-                        ),
-                      ),
-                    ],
+                      child: Text('Today'),
+                    ),
                   ),
                   SizedBox(height: 15),
                   Text(
-                    'Description',
+                    taskValue.description,
                     style: TextStyle(color: AppColors.secondaryTextDark),
                   ),
                 ],
@@ -85,6 +81,32 @@ class TaskDescriptionScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context, TaskModel taskValue) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Task'),
+          content: Text('Are you sure you want to delete this task?'),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                taskController.deleteTask(taskValue.id);
+                Get.back();
+                Get.back();
+              },
+              child: Text('Delete', style: TextStyle(color: AppColors.error)),
+            ),
+          ],
+        );
+      },
     );
   }
 }

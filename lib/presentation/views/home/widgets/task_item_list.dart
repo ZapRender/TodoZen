@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_colors.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
+import 'package:todo_zen/data/models/task_model.dart';
+import 'package:todo_zen/presentation/controllers/task_controller.dart';
+import 'package:todo_zen/routes/app_routes.dart';
 
 class TasksItemList extends StatelessWidget {
-  const TasksItemList({super.key});
+  TasksItemList({super.key, required this.taskValue});
+  final TaskModel taskValue;
+  final TaskController taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +19,7 @@ class TasksItemList extends StatelessWidget {
         color: AppColors.darkCard,
         child: ListTile(
           title: Text(
-            'Task title',
+            taskValue.title,
             style: AppTextTheme.darkTextTheme.titleMedium,
           ),
           subtitle: Text('Date'),
@@ -22,10 +28,15 @@ class TasksItemList extends StatelessWidget {
               borderRadius: BorderRadius.circular(100.0),
             ),
             value: false,
-            onChanged: null,
+            onChanged: (value) {
+              taskController.toggleTaskStatus(taskValue);
+            },
             activeColor: AppColors.primaryDark,
           ),
+          onTap: () => Get.toNamed(AppRoutes.description, arguments: taskValue),
         ),
+        
+        
       ),
     );
   }

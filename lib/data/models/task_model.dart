@@ -15,22 +15,26 @@ class TaskModel {
     this.isCompleted = false,
   });
 
-  factory TaskModel.fromMap(Map<String, dynamic> map, String id) {
+  factory TaskModel.fromMap(
+    QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
+    String id,
+  ) {
+    final data = snapshot.data();
     return TaskModel(
       id: id,
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      date: map['date'] ?? Timestamp.now(),
-      isCompleted: map['isCompleted'] ?? false,
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
+      date: data['date'] ?? Timestamp.now(),
+      isCompleted: data['isCompleted'] ?? false,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
-      'description': description,
-      'date': date,
-      'isCompleted': isCompleted,
+      "title": title,
+      "description": description,
+      "date": date,
+      "isCompleted": isCompleted,
     };
   }
 }

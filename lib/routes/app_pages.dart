@@ -12,6 +12,6 @@ class AppPages {
     GetPage(name: AppRoutes.splash, page: () => SplashScreen()),
     GetPage(name: AppRoutes.login, page: () => LoginScreen()),
     GetPage(name: AppRoutes.register, page: () => RegisterScreen()),
-    GetPage(name: AppRoutes.profile, page: () => TaskDescriptionScreen()),
+    GetPage(name: AppRoutes.description, page: () => TaskDescriptionScreen()),
   ];
 }

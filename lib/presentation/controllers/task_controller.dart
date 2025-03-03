@@ -10,12 +10,14 @@ class TaskController extends GetxController {
   final TextEditingController dateController = TextEditingController();
 
   final FirestoreService _firestoreService = FirestoreService();
-  var taks = <TaskModel>[].obs;
+  var tasks = <TaskModel>[].obs;
 
   @override
   void onInit() {
-    taks.bindStream(_firestoreService.getTask());
     super.onInit();
+    _firestoreService.getTask().listen((taskList) {
+      tasks.value = taskList;
+    });
   }
 
   @override

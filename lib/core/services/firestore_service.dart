@@ -19,16 +19,9 @@ class FirestoreService {
   }
 
   Stream<List<TaskModel>> getTask() {
-    return _taskCollection.snapshots().map(
-      (snapshot) =>
-          snapshot.docs
-              .map(
-                (doc) => TaskModel.fromMap(
-                  doc.data() as Map<String, dynamic>,
-                  doc.id,
-                ),
-              )
-              .toList(),
-    );
+    return _taskCollection.snapshots().map((snapshot) => snapshot.docs
+        .map((doc) => TaskModel.fromMap(doc as QueryDocumentSnapshot<Map<String, dynamic>>, doc.id))
+        .toList());
+    
   }
 }
