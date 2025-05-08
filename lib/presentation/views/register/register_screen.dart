@@ -101,7 +101,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () async {
-                            Get.toNamed(AppRoutes.login);
+                            Get.back();
                           },
                           child: Text(
                             'Login',
