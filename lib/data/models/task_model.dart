@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class TaskModel {
   String id;
@@ -14,6 +15,10 @@ class TaskModel {
     required this.date,
     this.isCompleted = false,
   });
+
+  String get formattedDate {
+    return DateFormat('yyyy-MM-dd').format(date.toDate());
+  }
 
   factory TaskModel.fromMap(Map<String, dynamic> map, String id) {
     return TaskModel(

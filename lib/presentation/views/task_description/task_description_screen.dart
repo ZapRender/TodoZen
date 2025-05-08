@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_colors.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
+import 'package:todo_zen/presentation/controllers/task_controller.dart';
 
 class TaskDescriptionScreen extends StatelessWidget {
-  const TaskDescriptionScreen({super.key});
+  TaskDescriptionScreen({super.key});
+
+  final TaskController taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
@@ -11,14 +15,15 @@ class TaskDescriptionScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.darkBackground,
         leading: IconButton(
-          onPressed: null,
+          onPressed: Get.back,
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.delete_outline, color: AppColors.error),
             onPressed: () {
-              // Acción para el icono de editar
+              taskController.deleteTask(taskController.selectedTask.value.id);
+              Get.back();
             },
           ),
         ],
@@ -28,9 +33,13 @@ class TaskDescriptionScreen extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: null,
+            onPressed: (){
+  
+              taskController.toggleTaskStatus(taskController.selectedTask.value);
+              Get.back();
+            },
             child: Text(
-              'Mark as done',
+              taskController.selectedTask.value.isCompleted ? 'Mark as Incomplete' : 'Mark as Complete',
               style: TextStyle(color: AppColors.primaryDark, fontSize: 16),
             ),
           ),
@@ -48,7 +57,7 @@ class TaskDescriptionScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Task title',
+                    taskController.selectedTask.value.title,
                     style: AppTextTheme.darkTextTheme.headlineMedium,
                   ),
                   SizedBox(height: 15),
@@ -59,7 +68,7 @@ class TaskDescriptionScreen extends StatelessWidget {
                         children: [
                           Icon(Icons.calendar_today),
                           SizedBox(width: 5),
-                          Text('Task Date: '),
+                          Text(taskController.selectedTask.value.formattedDate),
                         ],
                       ),
                       Card(
@@ -76,7 +85,7 @@ class TaskDescriptionScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 15),
                   Text(
-                    'Description',
+                    taskController.selectedTask.value.description,
                     style: TextStyle(color: AppColors.secondaryTextDark),
                   ),
                 ],

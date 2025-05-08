@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
 import 'package:todo_zen/presentation/controllers/home_controller.dart';
+import 'package:todo_zen/presentation/controllers/task_controller.dart';
 import 'package:todo_zen/presentation/views/home/widgets/bottom_sheet_tasks.dart';
 import 'package:todo_zen/presentation/views/home/widgets/task_item_list.dart';
 
@@ -11,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
+    final TaskController taskController = Get.put(TaskController());
 
     return Scaffold(
       appBar: AppBar(
@@ -20,10 +23,29 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) => TasksItemList(),
-      ),
+      body: Obx(() {
+        if (taskController.tasksPending.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset('assets/images/no_tasks.svg'),
+                Text('What do you want to do today?', style: AppTextTheme.darkTextTheme.titleLarge,),
+                Text('Tap + to add your tasks'),
+              ],
+            ),
+          );
+        }
+        return ListView.builder(
+          itemCount: taskController.tasksPending.length,
+          itemBuilder: (context, index) {
+            final task = taskController.tasksPending[index];
+            return TasksItemList(task: task);
+          },
+        );
+      }),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
