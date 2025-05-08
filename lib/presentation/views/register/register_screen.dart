@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_zen/presentation/controllers/auth_controller.dart';
-import 'package:todo_zen/routes/app_routes.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});

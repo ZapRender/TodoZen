@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:todo_zen/presentation/controllers/auth_controller.dart';
+import 'package:todo_zen/routes/app_routes.dart';
 
 class HomeController {
   var selectedIndex = 0.obs;
@@ -12,7 +13,7 @@ class HomeController {
         authController.logout();
         break;
       case 1:
-        Get.toNamed('/history');
+        Get.toNamed(AppRoutes.history);
         break;
       default:
     }

@@ -3,6 +3,7 @@ import 'package:todo_zen/main.dart';
 import 'package:todo_zen/presentation/views/history/history_screen.dart';
 import 'package:todo_zen/presentation/views/home/home_screen.dart';
 import 'package:todo_zen/presentation/views/login/login_screen.dart';
+import 'package:todo_zen/presentation/views/onboardings/onboardings.dart';
 import 'package:todo_zen/presentation/views/register/register_screen.dart';
 import 'package:todo_zen/presentation/views/task_description/task_description_screen.dart';
 import 'package:todo_zen/routes/app_routes.dart';
@@ -15,5 +16,6 @@ class AppPages {
     GetPage(name: AppRoutes.register, page: () => RegisterScreen()),
     GetPage(name: AppRoutes.taskDescription, page: () => TaskDescriptionScreen()),
     GetPage(name: AppRoutes.history, page: () => HistoryScreen()),
+    GetPage(name: AppRoutes.onboarding, page: () => OnboardingScreen()),
   ];
 }

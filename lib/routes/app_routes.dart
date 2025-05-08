@@ -5,4 +5,5 @@ class AppRoutes {
   static const register = '/register';
   static const taskDescription = '/taskDescription';
   static const history = '/history';
+  static const onboarding = '/onboarding';
 }

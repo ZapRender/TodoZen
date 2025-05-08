@@ -5,6 +5,7 @@ import 'package:todo_zen/core/theme/app_colors.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
 import 'package:todo_zen/data/models/task_model.dart';
 import 'package:todo_zen/presentation/controllers/task_controller.dart';
+import 'package:todo_zen/routes/app_routes.dart';
 
 class TasksItemList extends StatefulWidget {
   final TaskModel task;
@@ -37,7 +38,7 @@ class _TasksItemListState extends State<TasksItemList> {
               await Future.delayed(const Duration(milliseconds: 300));
 
               taskController.selectTask(widget.task);
-              Get.toNamed('/taskDescription');
+              Get.toNamed(AppRoutes.taskDescription);
             },
 
             child: ListTile(

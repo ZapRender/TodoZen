@@ -46,9 +46,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final authController = Get.find<AuthController>();
     Future.delayed(Duration(seconds: 2)).whenComplete(() {
       if (authController.firebaseUser.value != null) {
-        Get.offAllNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.onboarding);
       } else {
-        Get.offAllNamed(AppRoutes.login);
+        Get.offAllNamed(AppRoutes.onboarding);
       }
     });
   }
