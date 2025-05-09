@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_zen/core/theme/app_colors.dart';
 import 'package:todo_zen/core/theme/app_text_theme.dart';
-import 'package:todo_zen/data/models/task_model.dart';
 import 'package:todo_zen/presentation/controllers/task_controller.dart';
 
 class BottomSheetTasks extends StatelessWidget {
@@ -96,21 +92,7 @@ class BottomSheetTasks extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  final DateTime date = DateFormat(
-                    'yyyy-MM-dd',
-                  ).parse(taskController.dateController.text);
-                  try {
-                    final task = TaskModel(
-                      id: '',
-                      title: taskController.titleController.text,
-                      description: taskController.descriptionController.text,
-                      date: Timestamp.fromDate(date),
-                    );
-                    taskController.addTask(task);
-                    Get.back();
-                  } catch (e) {
-                    Get.snackbar('Error: ', e.toString());
-                  }
+                  taskController.validateAndAddTask();
                 },
                 child: Text(
                   'Save',

@@ -12,6 +12,7 @@ class HomeController {
         authController.logout();
         break;
       case 1:
+        Get.toNamed('/history');
         break;
       default:
     }
